@@ -151,7 +151,32 @@
               </div>
       	</div>  	    
     	</div>
-	</div>	
-</div>
-
+	</div>
+	<!--News-->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="section-title">
+        <h1 class="text-center">News</h2>
+      </div>
+    </div>
+    {% for obj in object_list %}
+      <div class="col-md-4">
+        <div class="post">
+          <a class="post-img" href="#"><img src="{{obj.image.url}}" alt="{{obj.title}}"></a>
+          <div class="post-body">
+            <div class="post-category">
+              {% for cat in obj.categories.all %}
+                <a href="#">{{cat.title}}</a>
+              {% endfor %}
+            </div>
+            <h3 class="post-title"><a href="#">{{obj.title}}</a></h3>
+              <ul class="post-meta">
+                <li>{{obj.content|truncatewords:20 | safe}}</li>
+                <li>{{obj.published_date}}</li>
+              </ul>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}
