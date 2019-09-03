@@ -20,7 +20,6 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=200)),
-                ('blog_blurb', models.TextField()),
                 ('content', tinymce.models.HTMLField()),
                 ('created_date', models.DateTimeField(auto_now_add=True)),
                 ('published_date', models.DateTimeField(blank=True, default=django.utils.timezone.now, null=True)),
