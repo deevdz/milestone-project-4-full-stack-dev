@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <!--News Item Header Area -->
+  <div class="container-fluid">
+    <div id="post-header" class="page-header">
+      <div class="page-header-bg" style="background-image: url({{news.image.url}}); background-position: 0px -71px;" data-stellar-background-ratio="0.5"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+          <div class="post-category">
+          <a href="#">                  
+            {% for cat in news.categories.all %}
+                <a href="#">{{cat.title}}</a>
+            {% endfor %}</a>
+          </div>
+          <h1>{{news.title}}</h1>
+          <ul class="post-meta">
+          <li>{{news.published_date |date:"F j, Y"}}</li>
+          <!--<li><i class="fa fa-comments"></i> 3</li>-->
+          <li><i class="fa fa-eye"></i> {{news.views}} </li>
+          </ul>
+          </div>        
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--News Item Content Area -->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8 mt-40 mb-80">
+        <p>{{news.content | safe}}</p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
