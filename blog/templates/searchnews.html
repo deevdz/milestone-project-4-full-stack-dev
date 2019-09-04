@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h2>These are the results of your search</h2>
+    {% for news in queryset %}
+        <a href="{{news.get_absolute_url}}"><h3>{{news.title}}</h3></a>
+    {% endfor %}
+</div>
+
+{% endblock %}

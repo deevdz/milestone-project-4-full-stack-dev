@@ -9,25 +9,83 @@
             <h1 class="text-center">News</h1>
           </div>
         </div>
-        {% for item in news_items %}
-          <div class="col-md-4">
-            <div class="post">
-              <a class="post-img" href="{% url 'news_detail' item.id %}"><img src="{{item.image.url}}" alt="{{item.title}}"></a>
-              <div class="post-body">
-                <div class="post-category">
-                  {% for cat in item.categories.all %}
-                    <a href="#">{{cat.title}}</a>
-                  {% endfor %}
+</div>
+<div class="container">
+  <div class="row">
+      <div class="col-sm-12 col-md-8">
+        <div class="row">
+          {% for item in queryset %}
+            <div class="col-sm-12 col-md-6  ">
+              <div class="post">
+                <a class="post-img" href="{{ item.get_absolute_url }}"><img src="{{item.image.url}}" alt="{{item.title}}"></a>
+                <div class="post-body">
+                  <div class="post-category">
+                    {% for cat in item.categories.all %}
+                      <a href="#">{{cat.title}}</a>
+                    {% endfor %}
+                  </div>
+                  <h3 class="post-title"><a href="{{ item.get_absolute_url }}">{{item.title}}</a></h3>
+                    <ul class="post-meta">
+                      <li>{{item.content|truncatewords:20 | safe}}</li>
+                      <li>{{item.published_date|date:"F j, Y"}}</li>
+                    </ul>
                 </div>
-                <h3 class="post-title"><a href="{% url 'news_detail' item.id %}">{{item.title}}</a></h3>
-                  <ul class="post-meta">
-                    <li>{{item.content|truncatewords:20 | safe}}</li>
-                    <li>{{item.published_date|date:"F j, Y"}}</li>
-                  </ul>
               </div>
+          </div>
+          {% endfor %}
+        </div>
+        <!-- Pagination -->
+        <div class="row">
+          <nav aria-label="Pagination">
+            <ul class="pagination pagination-template d-flex justify-content-center">
+              {% if queryset.has_previous %}                
+                <li class="page-item"><a href="?{{ page_request_var }}={{ queryset.previous_page_number }}" class="page-link"> <i class="fa fa-angle-left"></i></a></li>
+              {% endif %}
+              {% for page in queryset.paginator.page_range %}
+                {% if page == queryset.number %}
+                  <li class="page-link active"><a class="page_number" href="?page={{page}}">{{page}}</a></li>
+                {% else %}
+                  <li class="page-link"><a href="?page={{page}}">{{page}}</a></li>
+                {% endif %}
+              {% endfor %}
+              {% if queryset.has_next %}
+                <li class="page-item"><a href="?{{ page_request_var }}={{ queryset.next_page_number }}" class="page-link"> <i class="fa fa-angle-right"></i></a></li>
+              {% endif %}
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div class="col-sm-12 offset-md-1 col-md-3">
+        <div class="row">
+          <div class="aside-widget">
+            <div id="search-2" class="widget widget_search">
+              <form action="{% url 'search_news' %}">
+                <div class="input-holder clearfix">
+                  <input type="search" class="search-field" placeholder="Search our news" value="" name="q" title="Search for:">
+                  <button type="submit" class="edgtf-search-submit"><span aria-hidden="true" class=""><i class="fas fa-search"></i></span></button>
+                </div>
+              </form>
+            </div>            
+          </div>          
+          <div class="aside-widget">
+            <div class="section-title">
+              <h2 class="title">Categories</h2>
+            </div>
+            <div class="category-widget">
+              <ul>
+                {% for cat in category_count %}
+                <li><a href="#">{{ cat.categories__title }}<span>{{ cat.categories__title__count }}</span></a></li>
+                {% endfor %}
+              </ul>
             </div>
           </div>
-        {% endfor %}
+
+        </div>
       </div>
-</div>
+ </div>
+      
 {% endblock %}
+
+
+

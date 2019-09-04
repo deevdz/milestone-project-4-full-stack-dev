@@ -162,14 +162,14 @@
     {% for obj in object_list %}
       <div class="col-md-4">
         <div class="post">
-          <a class="post-img" href="{% url 'news_detail' obj.id %}"><img src="{{obj.image.url}}" alt="{{obj.title}}"></a>
+          <a class="post-img" href="{{ obj.get_absolute_url }}"><img src="{{obj.image.url}}" alt="{{obj.title}}"></a>
           <div class="post-body">
             <div class="post-category">
               {% for cat in obj.categories.all %}
                 <a href="#">{{cat.title}}</a>
               {% endfor %}
             </div>
-            <h3 class="post-title"><a href="{% url 'news_detail' obj.id %}">{{obj.title}}</a></h3>
+            <h3 class="post-title"><a href=""{{ obj.get_absolute_url }}">{{obj.title}}</a></h3>
               <ul class="post-meta">
                 <li>{{obj.content|truncatewords:20 | safe}}</li>
                 <li>{{obj.published_date|date:"F j, Y"}}</li>

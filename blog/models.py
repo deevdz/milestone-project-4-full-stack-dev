@@ -1,10 +1,11 @@
 from django.db import models
 from django.utils import timezone
 from tinymce import HTMLField
+from django.urls import reverse
 
 class Category(models.Model):
     title = models.CharField(max_length=30)
-
+    blurb = models.TextField(default='')
     def __str__(self):
         return self.title
 
@@ -24,3 +25,8 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+        
+    def get_absolute_url(self):
+        return reverse('news_detail', kwargs={
+        'pk': self.pk
+        })

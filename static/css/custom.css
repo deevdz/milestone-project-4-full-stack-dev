@@ -225,6 +225,92 @@ nav.scrollnav {
     text-transform: uppercase;
 }
 
+/* News Sidebars */
+.aside-widget {
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.aside-widget .section-title .title {
+    position: relative;
+    display: inline-block;
+    background-color: #f8f5f0;
+    font-family: Neuton;
+    letter-spacing:1px;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-right: 10px;
+    z-index: 20;
+}
+
+/* .aside-widget .section-title::after {
+    content: "";
+    display: inline-block;
+    height: 2px;
+    background-color: #e8eaed;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 10px;
+    z-index: 10;
+} */
+
+.category-widget ul li {
+    padding: 15px 0px;
+    border-bottom: 1px solid #e8eaed;
+}
+
+.category-widget ul li a {
+    display: block;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.category-widget ul li a span {
+    float: right;
+    font-size: 14px;
+    color: #97989b;
+    margin-left: 15px;
+}
+
+
+.widget.widget_search .input-holder, .widget.widget_search input {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+}
+
+.widget.widget_search input {
+    font-size: 16px;
+    color: #928c81;
+    background-color: transparent;
+    border: 1px solid transparent;
+        border-bottom-color: transparent;
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+    border-bottom: 1px solid #2e2e2d;
+    -webkit-transition: border-color .2s ease-out;
+    -o-transition: border-color .2s ease-out;
+    transition: border-color .2s ease-out;
+}
+
+.widget.widget_search button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+    color: #2e2e2d;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    -webkit-transition: color .2s ease-out;
+    -o-transition: color .2s ease-out;
+    transition: color .2s ease-out;
+}
+
 /*News Details Page Styles */
 #post-header {
     padding-top: 120px;
@@ -283,6 +369,47 @@ nav.scrollnav {
     color: #97989b;
     font-size: 12px;
     text-transform: uppercase;
+}
+
+.post-nav .prev-post  {
+    float: left;
+    width: 45%;
+    padding-right: 15px;
+}
+
+.post-nav .next-post {
+    float: right;
+    width: 45%;
+    text-align: right;
+    padding-left: 15px;
+}
+
+.post-nav .prev-post .post-img {
+    float: left;
+    margin-right: 15px;
+}
+
+.post-nav .next-post .post-img {
+    float: right;
+    margin-left: 15px;
+}
+
+.post-nav .post-img {
+    display: block;
+    width: 100px;
+    overflow: hidden;
+}
+
+.post-nav .post-title {
+    font-size: 14px;
+    margin: 0px;
+}
+
+.post-nav .next-post span, .post-nav .prev-post span {
+    font-weight: 700;
+    color: #97989b;
+    text-transform: uppercase;
+    font-size: 12px;
 }
 
 /* Footer styles */
