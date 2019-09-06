@@ -159,20 +159,20 @@
         <h1 class="text-center">News</h1>
       </div>
     </div>
-    {% for obj in object_list %}
+    {% for item in queryset %}
       <div class="col-md-4">
         <div class="post">
-          <a class="post-img" href="{{ obj.get_absolute_url }}"><img src="{{obj.image.url}}" alt="{{obj.title}}"></a>
+          <a class="post-img" href="{{ item.get_absolute_url }}"><img src="{{item.image.url}}" alt="{{item.title}}"></a>
           <div class="post-body">
             <div class="post-category">
-              {% for cat in obj.categories.all %}
-                <a href="#">{{cat.title}}</a>
+              {% for cat in item.categories.all %}
+                <a href="{% url 'list_news_by_category' cat.slug %}">{{cat.title}}</a>
               {% endfor %}
             </div>
-            <h3 class="post-title"><a href=""{{ obj.get_absolute_url }}">{{obj.title}}</a></h3>
+            <h3 class="post-title"><a href="{{ item.get_absolute_url }}">{{item.title}}</a></h3>
               <ul class="post-meta">
-                <li>{{obj.content|truncatewords:20 | safe}}</li>
-                <li>{{obj.published_date|date:"F j, Y"}}</li>
+                <li>{{item.content|truncatewords:20 | safe}}</li>
+                <li>{{item.published|date:"F j, Y"}}</li>
               </ul>
           </div>
         </div>

@@ -6,45 +6,37 @@ from .models import Blog, Category
 from django.views.generic import View, ListView, DetailView, CreateView, UpdateView, DeleteView
 
 # Searching the News
-def search_news(request):
+def search(request):
     queryset = Blog.objects.all()
     query = request.GET.get('q')
+    category_count = get_category_count()
     if query:
         queryset = queryset.filter(
             Q(title__icontains=query) |
             Q(content__icontains=query) |
             Q(tag__icontains=query)
         ).distinct()
-    else:
-        queryset = Blog.objects.filter(status = 'published')
-    category_count = get_category_count()
     context = {
         'queryset': queryset,
         'category_count': category_count
     }
     return render(request, 'searchnews.html', context)
 
-def list_news_by_category(request, slug):
-    categories = Category.objects.all()
-    category_count = get_category_count()
-    news_items = Blog.objects.filter(status='published')
-    if slug:
-        category = get_object_or_404(Category, slug=slug)
-        news_items = news_items.filter(categories=category).distinct()
+
+#Display a list of posts from a selected category
+def category_detail(request, pk):
+    category = get_object_or_404(Category, pk=pk)
     context = {
-        'categories': categories,
-        'queryset': news_items,
-        'category': category,
-        'category_count': category_count
+        'category':category
     }
-    return render(request,'categorydetail.html', context )
+    return render(request, 'categorydetail.html', context) 
+
 
 # Count the number of posts in each category
 def get_category_count():
     queryset = Blog \
         .objects \
-        .filter(status='published') \
-        .values('categories__title', 'categories__slug') \
+        .values('categories__title') \
         .annotate(Count('categories__title'))
     return queryset
 
@@ -52,44 +44,47 @@ def get_category_count():
 def news(request):
     """A view that displays all the News Stories on a News Page"""
     category_count = get_category_count()
-    news_items = Blog.objects.filter(status='published').order_by('-created_date')
+    category = Category.objects.first()
+    news_items = Blog.objects.order_by('-created_date')
     paginator = Paginator(news_items, 4)
     page_request_var = 'page'
     page = request.GET.get(page_request_var)
-    if news_items:
-        try:
-            paginated_queryset = paginator.page(page)
-        except PageNotAnInteger:
-            paginated_queryset = paginator.page(1)
-        except EmptyPage:
-            paginated_queryset = paginator.page(paginator.num_pages)
+    try:
+        paginated_queryset = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_queryset = paginator.page(1)
+    except EmptyPage:
+        paginated_queryset = paginator.page(paginator.num_pages)
     context = {
         'queryset': paginated_queryset,
         'page_request_var': page_request_var,
         'category_count' : category_count,
+        'category':category
     }
     return render(request, 'news.html', context)
 
-def news_detail(request, slug):
+def news_detail(request, pk):
     """
     Create a view that returns a single
-    News Item based on the post slug and
+    News Item based on the post ID (pk) and
     render it to the 'news_item.html' template.
     Or return a 404 error if the post is
     not found
     """
-    news = get_object_or_404(Blog, slug=slug)
+    news = get_object_or_404(Blog, pk=pk)
     news.views += 1
     news.save()
     category_count = get_category_count()
+    
     try:
         next_news = news.get_next_by_created_date()
     except Blog.DoesNotExist:
         next_news = None
+
     try:
         previous_news = news.get_previous_by_created_date()
     except Blog.DoesNotExist:
-            previous_news = None
+        previous_news = None
     
     context = {
         'news': news,

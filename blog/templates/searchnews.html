@@ -1,12 +1,44 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
 <div class="container">
-    <h2>These are the results of your search</h2>
-    {% for news in queryset %}
-        <a href="{{news.get_absolute_url}}"><h3>{{news.title}}</h3></a>
-    {% endfor %}
+	<!--News Layout-->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-title">
+            <h1 class="text-center">Search Results</h1>
+          </div>
+        </div>
 </div>
-
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <div class="row">
+          {% for news in queryset %}
+            <div class="col-sm-12 col-md-6  ">
+              <div class="post">
+                <a class="post-img" href="{{ news.get_absolute_url }}"><img src="{{news.image.url}}" alt="{{news.title}}"></a>
+                <div class="post-body">
+                  <div class="post-category">
+                    {% for cat in news.categories.all %}
+                      <a href="#">{{cat.title}}</a>
+                    {% endfor %}
+                  </div>
+                  <h3 class="post-title"><a href="{{ news.get_absolute_url }}">{{news.title}}</a></h3>
+                    <ul class="post-meta">
+                      <li>{{news.content|truncatewords:20 | safe}}</li>
+                      <li>{{news.published_date|date:"F j, Y"}}</li>
+                    </ul>
+                </div>
+              </div>
+          </div>
+          {% endfor %}
+        </div>
+        </div>
+        <div class="col-sm-12 offset-md-1 col-md-3">
+            {% include 'newssidebar.html' with category_count=category_count %}
+        </div>
+    </div>
+</div>
 {% endblock %}
+
