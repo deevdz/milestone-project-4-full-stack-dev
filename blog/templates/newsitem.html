@@ -30,34 +30,83 @@
       <div class="col-sm-12 col-md-8 mt-40 mb-80">
         <!--News Item Content Area -->
         <p>{{news.content | safe}}</p>
-        <div class="post-nav">
+        <div class="post-nav mb-80">
           {% if previous_news.status == 'published' %}
-          <div class="prev-post">
-            <a class="post-img" href="{% url 'news_detail' previous_news.slug %}"><img src="{{previous_news.image.url}}" alt=""></a>
-            <h3 class="post-title"><a href="{% url 'news_detail' previous_news.slug %}">{{previous_news.title}}</a></h3>
-            <span><a href="{% url 'news_detail' previous_news.slug %}">Previous post</a></span>
-          </div>
-        {% else %}
-          <div class="prev-post" style="display:none;">
+            <div class="prev-post">
+              <a class="post-img" href="{% url 'news_detail' previous_news.slug %}"><img src="{{previous_news.image.url}}" alt=""></a>
+              <h3 class="post-title"><a href="{% url 'news_detail' previous_news.slug %}">{{previous_news.title}}</a></h3>
+              <span><a href="{% url 'news_detail' previous_news.slug %}">Previous post</a></span>
+            </div>
+          {% else %}
+            <div class="prev-post" style="display:none;">
+              <span></span>
+            </div>
+          {% endif %}
+          {% if next_news.status == 'published' %} 
+            <div class="next-post">
+              <a class="post-img" href="{% url 'news_detail' next_news.slug %}"><img src="{{next_news.image.url}}" alt=""></a>
+              <h3 class="post-title"><a href="{% url 'news_detail' next_news.slug %}">{{next_news.title}}</a></h3>
+              <span><a href="{% url 'news_detail' next_news.slug %}">Next post</a></span>
+            </div>
+          {% else %}
+          <div class="next-post" style="display:none;">
             <span></span>
           </div>
-        {% endif %}
-        {% if next_news.status == 'published' %} 
-          <div class="next-post">
-            <a class="post-img" href="{% url 'news_detail' next_news.slug %}"><img src="{{next_news.image.url}}" alt=""></a>
-            <h3 class="post-title"><a href="{% url 'news_detail' next_news.slug %}">{{next_news.title}}</a></h3>
-            <span><a href="{% url 'news_detail' next_news.slug %}">Next post</a></span>
-          </div>
-        {% else %}
-        <div class="next-post" style="display:none;">
-          <span></span>
+          {% endif %}
         </div>
-        {% endif %}
+        <div class="post-comments mt-40 ">
+          <header>
+            <h3 class="h6">Post Comments<span class="no-of-comments">({{news.comments.count}})</span></h3>
+          </header>
+
+          <div class="comment">
+          {% for comment in news.get_comments %}
+            <div class="comment-header d-flex justify-content-between">
+              <div class="user d-flex align-items-center">
+                <div class="image">
+                  <i class="fas fa-user"></i>
+                </div>
+                <div class="title"><strong>{{ comment.user.username }}</strong><span class="date">{{ comment.timestamp|timesince }} ago</span></div>
+              </div>
+            </div>
+            <div class="comment-body">
+                <p>{{ comment.content }}</p>
+            </div>
+            {% empty %}
+            <div class="comment-body">
+                <p>No comments here :(</p>
+            </div>
+          {% endfor %}
+          </div>
+
+          {% if request.user.is_authenticated %}
+          <div class="add-comment">
+                  <header>
+                    <h3 class="h6">Please type your comment below:</h3>
+                  </header>
+                  <form method="POST" id="comment-form" class="commenting-form" onsubmit='this.submit();this.reset();return false;'>
+                    {% csrf_token %}
+                    <div class="row">
+                      <div class="form-group col-md-12">
+                        {{ form }}
+                      </div>
+                      <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-secondary">Submit Comment</button>
+                      </div>
+                    </div>
+                  </form>
+          </div>
+          {% else %}
+          <div class="add-comment">
+             <a href="{% url 'account_login' %}?next={% firstof request.path '/' %}" class="btn btn-primary">Login to comment</a>
+          </div>
+          {% endif %}
         </div>
       </div>
       <div class="col-sm-12 offset-md-1 col-md-3 mt-40 mb-80">
           {% include 'newssidebar.html' %}
-        </div>
+      </div>
     </div>
   </div>
+  
 {% endblock %}

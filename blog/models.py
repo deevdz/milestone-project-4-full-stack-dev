@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.utils import timezone
 from tinymce import HTMLField
 from django.urls import reverse
@@ -43,9 +44,24 @@ class Blog(models.Model):
     image = models.ImageField(upload_to="img", blank=True, null=True)
     featured = models.BooleanField()
     categories = models.ManyToManyField(Category)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
         
     def get_absolute_url(self):
         return reverse('news_detail', args=[self.slug])
+        
+    @property
+    def get_comments(self):
+        return self.comments.all().order_by('-timestamp')
+        
+class Comment(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    content = models.TextField()
+    blog = models.ForeignKey(
+        'Blog', related_name='comments', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username

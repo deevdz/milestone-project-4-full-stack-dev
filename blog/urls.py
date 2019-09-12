@@ -5,6 +5,5 @@ urlpatterns = [
     url(r'^$', news, name='news'),
     url(r'^search/$', search_news, name='search_news'),
     url(r'^category/(?P<slug>[-\w]+)/$', list_news_by_category, name='list_news_by_category'),
-    url(r'^(?P<slug>[-\w]+)/$', news_detail, name='news_detail'),
-
+    url(r'^(?P<slug>[-\w]+)/$', news_detail, name='news_detail')
 ]

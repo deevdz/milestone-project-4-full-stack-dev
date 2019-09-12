@@ -5,6 +5,10 @@ window.onscroll = () => {
   else nav.className = 'navbar sticky-top navbar-expand-lg navbar-dark scrollnav';
 };
 
+$(document).ready(function() {
+  $('#usercomment').val('');
+});
+
 // Homepage Carousel
 $('.carousel').carousel({
   interval: 2000
