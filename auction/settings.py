@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'tinymce',
     'home',
     'blog',
+    'products',
 ]
 
 SITE_ID = 1

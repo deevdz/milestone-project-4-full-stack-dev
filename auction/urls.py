@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.views.static import serve
 from home.views import index
 from blog import urls as urls_blog
+from products import urls as urls_products
 from .settings import MEDIA_ROOT
 
 urlpatterns = [
@@ -25,6 +26,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', index),
     url(r'^news/', include(urls_blog)),
+    url(r'^products/', include(urls_products)),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT})    
 ]

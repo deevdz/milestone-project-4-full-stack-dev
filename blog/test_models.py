@@ -1,6 +1,6 @@
 from django.test import TestCase
 from allauth.utils import get_user_model
-from .models import Blog, Category
+from .models import Blog, Category, Comment
 
 class TestBlogModel(TestCase):
 
@@ -17,3 +17,10 @@ class TestBlogModel(TestCase):
         category = Category(title="Fashion")
         category.save()
         self.assertEqual(category.title, "Fashion")
+    
+    def test_can_create_a_comment(self):
+        comment = Comment(user_id=1, content="Testing", blog_id=2)
+        comment.save()
+        self.assertEqual(comment.user_id, 1)
+        self.assertEqual(comment.content, "Testing")
+        self.assertEqual(comment.blog_id, 2)
