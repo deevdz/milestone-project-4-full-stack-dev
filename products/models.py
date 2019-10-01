@@ -20,12 +20,21 @@ class ProductColour(models.Model):
 
     def __str__(self):
         return self.title
+ 
+#Product Condition
+class ProductCondition(models.Model):
+    title = models.CharField(max_length=30)
+    slug = models.SlugField(max_length=250, unique=True)
+    
+    def __str__(self):
+        return self.title
         
 #Product Category
 class ProductCategory(models.Model):
     title = models.CharField(max_length=30)
     slug = models.SlugField(max_length=250, unique=True)
     blurb = models.TextField(default='',blank=True, null=True,)
+    image = models.ImageField(upload_to="img", blank=True, null=True)
     
     class Meta:
         ordering = ('title'),
@@ -59,12 +68,16 @@ class Product(models.Model):
     featured = models.BooleanField()
     categories = models.ManyToManyField(ProductCategory)  
     colour = models.ManyToManyField(ProductColour) 
-    size = models.ManyToManyField(ProductSize)
+    size = models.ForeignKey(ProductSize)
     buy_now = models.BooleanField(default=False)
     buy_now_price = models.FloatField()
     reserve = models.FloatField()
     time_ending = models.DateTimeField()
+    condition = models.ForeignKey(ProductCondition)
     
     def __str__(self):
         return self.title
+        
+    def get_absolute_url(self):
+        return reverse('single_product', args=[self.slug])
     

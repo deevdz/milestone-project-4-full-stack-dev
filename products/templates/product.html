@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-5 mt-40 mb-80">
+            {% if product.image %}
+            <img class="product-image" src="{{product.image.url}}" alt="{{product.title}}">
+            {% else %}
+            <img class="product-image" src="/static/img/the-clothes-vault-logo-site.png" alt="{{product.title}}">
+            {% endif %}
+        </div>
+        <div class="col-sm-12 offset-md-1 col-md-6 mt-40 mb-80">
+            <h3 class="product-title">{{product.title}}</h3>
+            <div class="product-price">&euro; {{product.buy_now_price|floatformat:2}}</div>
+            
+            <div class="product-meta">
+                <span class="product-size-wrapper">Size:  <span class="product-size">{{product.size}}</span></span>
+                <span class="product-condition-wrapper">Condition: <span class="condition">{{product.condition}}</span></span>
+                <span class="sku-wrapper">SKU: <span class="sku">{{product.sku}}</span></span>
+                <span class="product-category">
+                    {% for category in product.categories.all %}
+                        Category: 
+                        <a href="{% url 'list_products_by_category' category.slug %}" rel="tag">{{category.title}}</a>
+                    {% endfor %}
+                </span>
+                <span class="tagged-as">Tags: <a href="https://lacomete.edge-themes.com/product-tag/black/" rel="tag">{{product.tag}}</a>,</span>
+            </div>
+            
+            <div class="product-sharing">
+	        	<ul class="social-sharing">
+	        	    <li>
+	        	        <a href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+	        	    </li>
+	        	    <li>
+	        	        <a href="https://twitter.com/home?status={{product.title}}{{request.build_absolute_uri}}">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+	        	    </li>
+	        	    <li>
+	        	        <a href="https://pinterest.com/pin/create/bookmarklet/?url={{request.build_absolute_uri}}&amp;description={{product.title}}" title="Pinterest">
+    					    <i class="fab fa-pinterest-p"></i>
+				        </a>
+	        	    </li>
+				</ul>
+            </div>            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 mb-80">
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Description</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Condition</a>
+              </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+              <div class="tab-pane fade show active mt-40" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">{{product.content | safe}}</div>
+              <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+              <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+            </div>            
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

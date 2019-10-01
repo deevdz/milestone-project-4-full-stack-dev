@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'home',
     'blog',
     'products',
+    'cart',
 ]
 
 SITE_ID = 1
@@ -81,6 +82,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+                'cart.contexts.cart_contents',
+                'products.contexts.nav_product_categories',
             ],
         },
     },

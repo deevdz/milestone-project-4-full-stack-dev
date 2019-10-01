@@ -175,6 +175,12 @@ nav.scrollnav {
     border-color:#977844;
 }
 
+/* Homepage Category Items */
+.homepage-category-image {
+    width:100%;
+    height:350px;
+} 
+
 /* Homepage News Items */
 .post {
     position: relative;
@@ -410,6 +416,108 @@ nav.scrollnav {
     color: #97989b;
     text-transform: uppercase;
     font-size: 12px;
+}
+
+/* Single Product Styles */
+.product-title {
+    display: block;
+    margin: -7px 0 14px;
+    font-family: Neuton;
+    font-size: 40px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+.product-price {
+    font-size: 30px;
+    font-family: Neuton;
+    font-weight: 300;
+}
+.product-image {
+    display: block;
+    overflow: hidden;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 450px;
+    margin: 0 auto;
+}
+
+.product-image > img {
+    width: 100%;
+    -webkit-transition: 1.6s -webkit-transform;
+    transition: 1.6s -webkit-transform;
+    transition: 1.6s transform;
+    transition: 1.6s transform, 1.6s -webkit-transform;
+}
+
+.product-meta > span {
+    display: block;
+    font-family: Montserrat,sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #928c81;
+    font-size: 11px;
+    line-height: 1.63em;
+    letter-spacing: .16em;
+}
+
+.product-meta > span > * {
+    font-family: Neuton,serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.63em;
+    color: #727272;
+    background-color: #f8f5f0;
+    -webkit-font-smoothing: antialiased;
+    text-transform: none;
+    letter-spacing: 1px;
+}
+
+ul.social-sharing {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display:inline-block;
+}
+
+ul.social-sharing li {
+    display: inline-block;
+}
+
+ul.social-sharing li:not(:last-child) {
+    margin-right: 15px;
+}
+
+ul.social-sharing li a {
+    color: #727272;
+}
+
+ul.social-sharing li a:hover {
+    color: #977844;
+}
+
+.product-sharing {
+    margin:20px auto;
+    border-top:1px solid #efefef;
+    padding: 10px 0 0 0;
+    
+}
+
+.nav-tabs .nav-link.active {
+    color: #495057;
+    border-bottom: #495057 solid 1px !important;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.nav-item {
+    text-transform: uppercase;
+    font-size: 15px;
+}
+
+.nav-tabs {
+    border-bottom:0;
 }
 
 /* Footer styles */

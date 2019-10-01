@@ -51,25 +51,33 @@
     	    <h1 class="text-center">
     	        Our Categories
     	    </h1>
+
     	    <div class="row mt-20">
-    	        <div class="col-md-8 col-12">
-    	            <img src="https://via.placeholder.com/730x400.png" alt="">
+    	     {% for cat in category_queryset %}
+    	      {% if forloop.first %}    	      
+    	        <div class="clearfix mt-20 col-md-8 col-12">
+    	            <a href="{% url 'list_products_by_category' cat.slug %}"><img class="homepage-category-image" src="{{cat.image.url}}" alt="{{cat.title}}"></a>
     	        </div>
-    	        <div class="col-md-4 col-12">
-    	            <img src="https://via.placeholder.com/350x400.png" alt="">
+    	       {% endif %}
+    	       {% if forloop.counter == 2 %}
+    	        <div class="clearfix mt-20 col-md-4 col-12">
+    	            <a href="{% url 'list_products_by_category' cat.slug %}"><img class="homepage-category-image" src="{{cat.image.url}}" alt="{{cat.title}}"></a>
     	        </div>
-    	    </div>
-    	    <div class="row mt-20">
-    	        <div class="col-md-4 col-12">
-    	            <img src="https://via.placeholder.com/350x400.png" alt="">
+    	     {% endif %}
+
+    	      {% if forloop.counter == 3 %}
+    	        <div class="clearfix mt-20 col-md-4 col-12">
+    	            <a href="{% url 'list_products_by_category' cat.slug %}"><img class="homepage-category-image" src="{{cat.image.url}}" alt="{{cat.title}}"></a>
     	        </div>
-    	        <div class="col-md-4 col-12">
-    	            <img src="https://via.placeholder.com/350x400.png" alt="">
+    	       {% endif %}
+    	       {% if forloop.last %}
+    	        <div class="clearfix mt-20 col-md-8 col-12">
+    	            <a href="{% url 'list_products_by_category' cat.slug %}"><img class="homepage-category-image" src="{{cat.image.url}}" alt="{{cat.title}}"></a>
     	        </div>
-    	        <div class="col-md-4 col-12">
-    	            <img src="https://via.placeholder.com/350x400.png" alt="">
-    	        </div> 
+    	        {% endif %}
+    	     {% endfor %}
     	    </div>    	    
+
     	</div>
 	</div>
 	<!--Recent Arrivals-->
